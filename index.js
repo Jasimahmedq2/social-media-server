@@ -8,8 +8,10 @@ const cors = require('cors');
 const port = process.env.PORT || 9000;
 dotenv.config()
 const userRouter = require('./routes/user.route')
+const authRouter = require('./Model/auth')
 
-mongoose.connect(process.env.DATABASE_CONNECT,{useNewUrlParser: true, useUnifiedTopology: true, strictQuery: true}, () => {
+mongoose.connect(process.env.DATABASE_CONNECT,{useNewUrlParser: true, useUnifiedTopology: true}, (err) => {
+  console.log("mongodb error", err)
   console.log('connected database successfully')
 })
 // middleware
@@ -19,6 +21,7 @@ app.use(helmet())
 app.use(morgan("common"))
 
 app.use('/user', userRouter)
+app.use(authRouter)
 
 
 app.get('/', (req, res) => {
