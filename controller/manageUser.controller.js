@@ -1,7 +1,13 @@
 const bcrypt = require('bcrypt');
 const userModel = require('../Model/user.model');
-exports.userController = (req, res) => {
-  res.send('hey user controller,')
+
+exports.userController = async(req, res) => {
+ try { 
+  const findData = await userModel.findById(req.params.id, '-password')
+  res.status(200).send(findData)
+ } catch (error) {
+  res.status(500).send(error)
+ }
 }
 exports.updateUserController = async (req, res) => {
   if (req.params.id === req.body.userId || req.body.isAdmin) {
@@ -46,3 +52,4 @@ exports.deleteUserController = async(req, res) => {
     res.status(500).send('data not deleted')
   }
 }
+
