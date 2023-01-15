@@ -9,6 +9,7 @@ const port = process.env.PORT || 9000;
 dotenv.config()
 const userRouter = require('./routes/user.route')
 const authRouter = require('./routes/auth.route')
+const postRouter = require('./routes/post.route')
 
 mongoose.connect(process.env.DATABASE_CONNECT,{useNewUrlParser: true, useUnifiedTopology: true}, (err) => {
   console.log("mongodb error", err)
@@ -20,8 +21,9 @@ app.use(cors())
 app.use(helmet())
 app.use(morgan("common"))
 
-app.use('/user', userRouter)
+app.use('/api/user', userRouter)
 app.use(authRouter)
+app.use('/api/post', postRouter)
 
 
 app.get('/', (req, res) => {
