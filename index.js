@@ -8,7 +8,7 @@ const cors = require('cors');
 const port = process.env.PORT || 9000;
 dotenv.config()
 const userRouter = require('./routes/user.route')
-const authRouter = require('./Model/auth')
+const authRouter = require('./routes/auth.route')
 
 mongoose.connect(process.env.DATABASE_CONNECT,{useNewUrlParser: true, useUnifiedTopology: true}, (err) => {
   console.log("mongodb error", err)

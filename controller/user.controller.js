@@ -1,16 +1,13 @@
 const userModel = require("../Model/user.model")
 const bcrypt = require('bcrypt');
 
-exports.userController = (req, res) => {
-  res.send('hey user controller,')
-}
 
 exports.singUpController = async (req, res) => {
   console.log(req.body)
 
   try {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(req.body.password, salt);
+    const salt = await bcrypt.genSaltSync(10);
+    const hash = await bcrypt.hashSync(req.body.password, salt);
 
     const newUser = new userModel({
       username: req.body.username,
