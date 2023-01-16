@@ -1,8 +1,11 @@
 const express = require('express');
-const { createPostController, updatePostController } = require('../controller/newPost.controller');
+const { createPostController, updatePostController, deletePostController, LikeAndDislikeController } = require('../controller/newPost.controller');
 const Router = express.Router();
 
 Router.post('/', createPostController)
-Router.put('/:id', updatePostController)
+Router.put('/:id/like', LikeAndDislikeController)
+Router.route('/:id')
+.put(updatePostController)
+.delete(deletePostController)
 
 module.exports = Router;
