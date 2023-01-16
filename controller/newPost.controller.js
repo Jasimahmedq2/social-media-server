@@ -1,4 +1,5 @@
 const postModel = require("../Model/post.model")
+const userModel = require("../Model/user.model")
 
 exports.createPostController = async (req, res) => {
   try {
@@ -9,6 +10,7 @@ exports.createPostController = async (req, res) => {
     res.status(500).send(error)
   }
 }
+
 exports.updatePostController = async (req, res) => {
   try {
     const post = await postModel.findById(req.params.id)
@@ -39,19 +41,50 @@ exports.deletePostController = async (req, res) => {
 
 // like and dislike the post
 
-exports.LikeAndDislikeController = async(req, res) =>{
+exports.LikeAndDislikeController = async (req, res) => {
   const post = await postModel.findById(req.params.id)
   try {
-    if(!post.like.includes(req.body.userId)){
-      await post.updateOne({$push:{like: req.body.userId}})
+    if (!post.like.includes(req.body.userId)) {
+      await post.updateOne({ $push: { like: req.body.userId } })
       res.status(200).send('liked the post')
-    } else{
-      await post.updateOne({$pull:{like: req.body.userId}})
+    } else {
+      await post.updateOne({ $pull: { like: req.body.userId } })
       res.status(200).send('disliked the post')
     }
   } catch (error) {
     console.log("here was an error", error)
     res.status(500).send(error)
   }
+}
+
+// get a post
+
+exports.getAPostController = async (req, res) => {
+  try {
+    const post = await postModel.findById(req.params.id)
+    res.status(200).send(post)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+}
+
+exports.findTimelineController = async (req, res) => {
+
+  try {
+    const post = await userModel.findById(req.params.id)
+    const { followers } = post;
+
+    postModel.find({ userId: { $in: followers } }, (err, docs) => {
+      if (err) {
+        console.log("error", error)
+      } else {
+        res.status(200).send(docs)
+      }
+    });
+    
+  } catch (error) {
+    res.status(500).send(error)
+  }
+
 }
 
