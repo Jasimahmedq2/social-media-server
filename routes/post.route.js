@@ -4,7 +4,7 @@ const Router = express.Router();
 
 Router.post('/', createPostController)
 Router.put('/:id/like', LikeAndDislikeController)
-Router.get('/:id/timeline', findTimelineController)
+Router.get('/timeline', findTimelineController)
 Router.route('/:id')
 .get(getAPostController)
 .put(updatePostController)

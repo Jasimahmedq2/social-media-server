@@ -1,4 +1,6 @@
+
 const bcrypt = require('bcrypt');
+const postModel = require('../Model/post.model');
 const userModel = require('../Model/user.model');
 
 exports.userController = async(req, res) => {
@@ -9,6 +11,7 @@ exports.userController = async(req, res) => {
   res.status(500).send(error)
  }
 }
+
 exports.updateUserController = async (req, res) => {
   if (req.params.id === req.body.userId || req.body.isAdmin) {
     if (req.body.password) {
@@ -53,3 +56,39 @@ exports.deleteUserController = async(req, res) => {
   }
 }
 
+// get all user data
+exports.getAllUserData = async(req, res) => {
+  const userId = req.query.userId;
+  try {
+    const result = await postModel.find({userId: userId})
+    res.status(200).send(result)
+
+  } catch (error) {
+    res.status(500).send("can't get the data")
+  }
+}
+
+//get all user
+exports.getUserProfileData = async (req, res) => {
+
+    try {
+      const user = await userModel.findById(req.query.userId)
+      const { followers} = user;
+      
+      const userData = await userModel.find({_id: req.query.userId})
+
+      userModel.find({ _id: { $in: followers } }, (err, docs) => {
+        if (err) {
+          console.log("error", error)
+        } else {
+          const friends = [...docs, ...userData]
+          res.status(200).send(friends)
+          
+        }
+      });
+  
+    } catch (error) {
+      res.status(500).send(error)
+    }
+  
+  }

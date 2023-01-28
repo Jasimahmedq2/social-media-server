@@ -43,6 +43,7 @@ exports.deletePostController = async (req, res) => {
 
 exports.LikeAndDislikeController = async (req, res) => {
   const post = await postModel.findById(req.params.id)
+  console.log(post)
   try {
     if (!post.like.includes(req.body.userId)) {
       await post.updateOne({ $push: { like: req.body.userId } })
@@ -69,19 +70,24 @@ exports.getAPostController = async (req, res) => {
 }
 
 exports.findTimelineController = async (req, res) => {
-
+console.log("userid", req.body.userId)
   try {
-    const post = await userModel.findById(req.params.id)
-    const { followers } = post;
+    const post = await userModel.findById(req.query.userId)
+    console.log(post)
+    const { followers} = post;
+
+    const userData = await postModel.find({userId: req.query.userId})
+   
 
     postModel.find({ userId: { $in: followers } }, (err, docs) => {
       if (err) {
         console.log("error", error)
       } else {
-        res.status(200).send(docs)
+        const timelineData = [...docs, ...userData]
+        res.status(200).send(timelineData)
       }
     });
-    
+
   } catch (error) {
     res.status(500).send(error)
   }

@@ -24,6 +24,7 @@ exports.singUpController = async (req, res) => {
 }
 
 exports.loginController = async (req, res) => {
+  console.log(req.body)
   try {
     const user = await userModel.findOne({ email: req.body.email })
     
@@ -38,4 +39,6 @@ exports.loginController = async (req, res) => {
     res.status(500).send(error.message)
   }
 }
+
+
 
