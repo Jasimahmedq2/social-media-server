@@ -44,10 +44,12 @@ const userSchema = new mongoose.Schema({
   },
   city: {
     type: String,
+    default: "",
     max: 50
   },
   from: {
     type: String,
+    default:"",
     max: 50
   },
   relationship: {

@@ -26,9 +26,11 @@ exports.updatePostController = async (req, res) => {
 }
 
 exports.deletePostController = async (req, res) => {
+  console.log("req.body",req.query.userId)
   try {
     const post = await postModel.findById(req.params.id)
-    if (post.userId === req.body.userId) {
+    console.log(post)
+    if (post.userId === req.query.userId) {
       await post.delete()
       res.status(200).send('successfully deleted the post',)
     } else {
