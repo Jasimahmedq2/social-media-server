@@ -82,8 +82,7 @@ exports.getUserProfileData = async (req, res) => {
           console.log("error", error)
         } else {
           const friends = [...docs, ...userData]
-          res.status(200).send(friends)
-          
+          res.status(200).send(friends)          
         }
       });
   

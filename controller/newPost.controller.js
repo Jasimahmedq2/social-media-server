@@ -12,6 +12,8 @@ exports.createPostController = async (req, res) => {
 }
 
 exports.updatePostController = async (req, res) => {
+  console.log("update req.body", req.body)
+
   try {
     const post = await postModel.findById(req.params.id)
     if (post.userId === req.body.userId) {
