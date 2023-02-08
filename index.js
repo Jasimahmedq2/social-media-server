@@ -10,6 +10,7 @@ dotenv.config()
 const userRouter = require('./routes/user.route')
 const authRouter = require('./routes/auth.route')
 const postRouter = require('./routes/post.route')
+const commentRouter = require('./routes/comment.route')
 
 mongoose.connect(process.env.DATABASE_CONNECT,{useNewUrlParser: true, useUnifiedTopology: true}, (err) => {
   console.log("mongodb error", err)
@@ -24,6 +25,7 @@ app.use(morgan("common"))
 app.use('/api/user', userRouter)
 app.use(authRouter)
 app.use('/api/post', postRouter)
+app.use('/api/comment', commentRouter)
 
 
 app.get('/', (req, res) => {
