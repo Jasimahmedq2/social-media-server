@@ -9,7 +9,7 @@ exports.commentPostController = async (req, res) => {
     })
     console.log(comment)
     const result = await comment.save()
-    res.status(200).send('successfully create a comment')
+    res.status(200).send(result)
 
   } catch (error) {
     console.log("error found", error)
