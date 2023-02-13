@@ -95,6 +95,5 @@ console.log("userid", req.body.userId)
   } catch (error) {
     res.status(500).send(error)
   }
-
 }
 

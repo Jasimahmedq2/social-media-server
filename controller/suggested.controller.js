@@ -25,6 +25,8 @@ exports.suggestedUserController = async (req, res) => {
 
 }
 
+// get all mutuals friends
+
 exports.getMutualFriendController = async(req, res) => {
 
   try {
