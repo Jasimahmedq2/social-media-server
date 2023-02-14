@@ -88,7 +88,7 @@ console.log("userid", req.body.userId)
         console.log("error", error)
       } else {
         const timelineData = [...docs, ...userData]
-        const reversTimeline = [...timelineData].reverse()
+        const reversTimeline = timelineData.reverse()
         res.status(200).send(reversTimeline)
       }
     });
